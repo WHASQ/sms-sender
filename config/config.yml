@@ -1,0 +1,20 @@
+---
+sms:
+  default: twilio
+  providers:
+    -
+      name: twilio
+      type: '@rduk/sms-twilio'
+      connection: twilio
+broker:
+  default: amqp
+  providers:
+    -
+      name: amqp
+      type: '@rduk/message-broker/lib/provider/amqp'
+      address: ${AMQP_ADDRESS}
+  consumers:
+    sms:
+      queue: sms
+      translator: '@rduk/message-broker/lib/translator/json'
+      processor: ~/lib/processor

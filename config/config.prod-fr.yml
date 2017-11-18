@@ -1,0 +1,13 @@
+---
+connections:
+  -
+    name: twilio
+    accountSid: ${TWILIO_ACCOUNT_SID}
+    authToken: ${TWILIO_AUTH_TOKEN}
+    from: +33757900205
+broker:
+  queues:
+    sms:
+      name: sms.fr
+      headers: 
+        prefix: '+33'

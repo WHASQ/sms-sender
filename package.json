@@ -1,0 +1,39 @@
+{
+  "name": "@rduk/sms-sender",
+  "version": "0.0.1",
+  "main": "index.js",
+  "author": "RDUK <tech@rduk.fr>",
+  "license": "SEE LICENSE IN LICENSE",
+  "scripts": {
+    "lint": "jshint index.js lib/*.js",
+    "pretest": "npm run lint",
+    "test": "istanbul cover node_modules/jasmine/bin/jasmine.js"
+  },
+  "keywords": [
+    "sms",
+    "sender"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rd-uk/rduk-sms-sender.git"
+  },
+  "bugs": {
+    "url": "https://github.com/rd-uk/rduk-sms-sender/issues"
+  },
+  "homepage": "https://github.com/rd-uk/rduk-sms-sender#readme",
+  "rduk": {
+    "config": {
+      "path": "config"
+    }
+  },
+  "dependencies": {
+    "@rduk/message-broker": "^1.0.1",
+    "@rduk/sms": "0.0.2",
+    "@rduk/sms-twilio": "0.0.2"
+  },
+  "devDependencies": {
+    "istanbul": "0.4.5",
+    "jasmine": "2.8.0",
+    "jshint": "2.9.5"
+  }
+}
