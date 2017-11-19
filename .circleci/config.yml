@@ -57,7 +57,7 @@ jobs:
 
     steps:
       - run: sudo apt install -y rsync
-      - run: curl https://circleci.com/api/v1.1/project/github/rd-uk/sms-sender/latest/artifacts?circle_token=$CIRCLE-TOKEN | grep -o 'https://[^"]*' > artifacts.txt
+      - run: curl https://circleci.com/api/v1.1/project/github/rd-uk/sms-sender/latest/artifacts?circle-token=$CIRCLE_TOKEN | grep -o 'https://[^"]*' > artifacts.txt
       - run: cat artifacts.txt
       - run: <artifacts.txt xargs -P4 -I % wget %?circle_token=$CIRCLE_TOKEN
       - run:
