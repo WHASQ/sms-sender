@@ -52,8 +52,11 @@ jobs:
 
     steps:
       - run:
-          name: Deploy if tests pass and branch is Master
-          command: echo 'deployment in progress...'
+          name: create dir
+          command: ssh -o "StrictHostKeyChecking no" `$PROD_USER`@`PROD_HOSTNAME` "mkdir -p ~/workers/sms-sender"
+      - run:
+          name: rsync
+          command: rsync ~/repo/ `$PROD_USER`@`PROD_HOSTNAME`:~/workers/sms-sender/
 
 
 workflows:
