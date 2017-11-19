@@ -47,7 +47,7 @@ jobs:
       - run:
           name: tar
           command: tar --exclude='cc-test-reporter' --exclude='.circleci' --exclude='.git' --exclude='spec' --exclude='.gitignore' --exclude='.jshintrc' --exclude='LICENSE' --exclude='README.md' -zcvf /tmp/dist.tar.gz .
-      - store_artifact:
+      - store_artifacts:
           path: /tmp/dist.tar.gz
   deploy:
     docker:
