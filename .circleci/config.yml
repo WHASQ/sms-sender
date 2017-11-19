@@ -46,7 +46,7 @@ jobs:
       # prepare and upload dist artifact
       - run:
           name: tar
-          command: tar --exclude='.circleci' --exclude='.git' --exclude='spec' --exclude='.gitignore' --exclude='.jshintrc' --exclude='LICENSE' --exclude='README.md' $CIRCLE_ARTIFACTS/dist.tar.gz .
+          command: tar --exclude='.circleci' --exclude='.git' --exclude='spec' --exclude='.gitignore' --exclude='.jshintrc' --exclude='LICENSE' --exclude='README.md' -zcvf $CIRCLE_ARTIFACTS/dist.tar.gz .
   deploy:
     docker:
       - image: circleci/node:7.10
