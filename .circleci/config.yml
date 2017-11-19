@@ -42,6 +42,11 @@ jobs:
             ./cc-test-reporter before-build
             npm test
             ./cc-test-reporter after-build --debug --exit-code $?
+      
+      # prepare and upload dist artifact
+      -run:
+          name: tar
+          command: tar --exclude='.circleci' --exclude='.git' --exclude='spec' --exclude='.gitignore' --exclude='.jshintrc' --exclude='LICENSE' --exclude='README.md' $CIRCLE_ARTIFACTS/dist.tar.gz .
   deploy:
     docker:
       - image: circleci/node:7.10
@@ -54,11 +59,8 @@ jobs:
           name: prepare dir
           command: ssh -o "StrictHostKeyChecking no" $PROD_USER@$PROD_HOSTNAME "rm -rf ~/workers/sms-sender && mkdir -p ~/workers/sms-sender"
       - run:
-          name: list current dir
-          command: ls -l
-      - run:
-          name: test pm2
-          command: ssh -o "StrictHostKeyChecking no" $PROD_USER@$PROD_HOSTNAME "pm2 --version"
+          name: rsync
+          command: rsync ~/repo/ $PROD_USER@$PROD_HOSTNAME:~/workers/sms-sender/
 
 workflows:
   version: 2
