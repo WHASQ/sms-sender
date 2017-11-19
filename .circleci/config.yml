@@ -53,19 +53,19 @@ jobs:
     docker:
       - image: circleci/node:7.10
 
-    working_directory: ~/repo
+    working_directory: ~/dist
 
     steps:
       - run: sudo apt install -y rsync
-      - run: mkdir dist
       - run: curl https://circleci.com/api/v1.1/project/github/rd-uk/sms-sender/latest/artifacts?circle-token=$CIRCLE_TOKEN | grep -o 'https://[^"]*' > artifacts.txt
-      - run: <artifacts.txt xargs -P4 -I % wget -qO- %?circle-token=$CIRCLE_TOKEN | tar xf -C dist
+      - run: <artifacts.txt xargs -P4 -I % wget -qO- %?circle-token=$CIRCLE_TOKEN | tar xvz
+      - run: rm artifacts.txt
       - run:
           name: prepare dir
           command: ssh -o "StrictHostKeyChecking no" $PROD_USER@$PROD_HOSTNAME "rm -rf ~/workers/sms-sender && mkdir -p ~/workers/sms-sender"
       - run:
           name: rsync
-          command: rsync dist/ $PROD_USER@$PROD_HOSTNAME:~/workers/sms-sender/
+          command: cd ~/ && rsync ~/dist/ $PROD_USER@$PROD_HOSTNAME:~/workers/sms-sender/
 
 workflows:
   version: 2
