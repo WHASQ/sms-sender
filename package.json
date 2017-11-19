@@ -27,7 +27,7 @@
     }
   },
   "dependencies": {
-    "@rduk/message-broker": "^1.0.1",
+    "@rduk/message-broker": "1.0.1",
     "@rduk/sms": "0.0.2",
     "@rduk/sms-twilio": "0.0.2"
   },
