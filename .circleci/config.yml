@@ -46,7 +46,7 @@ jobs:
       # prepare and upload dist artifact
       - run:
           name: tar
-          command: tar --exclude='cc-test-reporter' --exclude='.circleci' --exclude='.git' --exclude='spec' --exclude='.gitignore' --exclude='.jshintrc' --exclude='LICENSE' --exclude='README.md' -zcvf /tmp/dist.tar.gz .
+          command: tar --exclude='cc-test-reporter' --exclude='coverage' --exclude='.circleci' --exclude='.git' --exclude='spec' --exclude='.gitignore' --exclude='.jshintrc' --exclude='LICENSE' --exclude='README.md' -zcvf /tmp/dist.tar.gz .
       - store_artifacts:
           path: /tmp/dist.tar.gz
   deploy:
@@ -57,6 +57,9 @@ jobs:
 
     steps:
       - run: sudo apt install -y rsync
+      - run: curl https://circleci.com/api/v1.1/project/github/rd-uk/sms-sender/latest/artifacts?circle_token=$CIRCLE-TOKEN | grep -o 'https://[^"]*' > artifacts.txt
+      - run: cat artifacts.txt
+      - run: <artifacts.txt xargs -P4 -I % wget %?circle_token=$CIRCLE_TOKEN
       - run:
           name: prepare dir
           command: ssh -o "StrictHostKeyChecking no" $PROD_USER@$PROD_HOSTNAME "rm -rf ~/workers/sms-sender && mkdir -p ~/workers/sms-sender"
