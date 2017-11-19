@@ -58,8 +58,7 @@ jobs:
     steps:
       - run: sudo apt install -y rsync
       - run: curl https://circleci.com/api/v1.1/project/github/rd-uk/sms-sender/latest/artifacts?circle-token=$CIRCLE_TOKEN | grep -o 'https://[^"]*' > artifacts.txt
-      - run: <artifacts.txt xargs -P4 -I % wget %?circle-token=$CIRCLE_TOKEN
-      - run: ls -l
+      - run: <artifacts.txt xargs -P4 -I % wget -qO- %?circle-token=$CIRCLE_TOKEN | tar xvz
       - run:
           name: prepare dir
           command: ssh -o "StrictHostKeyChecking no" $PROD_USER@$PROD_HOSTNAME "rm -rf ~/workers/sms-sender && mkdir -p ~/workers/sms-sender"
