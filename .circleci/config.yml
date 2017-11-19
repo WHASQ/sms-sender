@@ -53,7 +53,7 @@ jobs:
     steps:
       - run:
           name: create dir
-          command: ssh -o "StrictHostKeyChecking no" `$PROD_USER`@`PROD_HOSTNAME` "mkdir -p ~/workers/sms-sender"
+          command: ssh -o "StrictHostKeyChecking no" `$PROD_USER`@`$PROD_HOSTNAME` "mkdir -p ~/workers/sms-sender"
       - run:
           name: rsync
           command: rsync ~/repo/ `$PROD_USER`@`PROD_HOSTNAME`:~/workers/sms-sender/
