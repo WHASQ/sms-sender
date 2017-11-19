@@ -66,6 +66,9 @@ jobs:
       - run:
           name: rsync
           command: rsync -avz ./ $PROD_USER@$PROD_HOSTNAME:~/workers/sms-sender/
+      - run:
+          name: start
+          command: ssh -o "StrictHostKeyChecking no" $PROD_USER@$PROD_HOSTNAME "cd ~/workers/sms-sender; AMQP_ADDRESS=$AMQP_ADDRESS TWILIO_ACCOUNT_SID=$TWILIO_ACCOUNT_SID TWILIO_AUTH_TOKEN=$TWILIO_AUTH_TOKEN pm2 start ecosystem.config.js"
 
 workflows:
   version: 2
