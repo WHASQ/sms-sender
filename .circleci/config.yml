@@ -60,12 +60,13 @@ jobs:
       - run: curl https://circleci.com/api/v1.1/project/github/rd-uk/sms-sender/latest/artifacts?circle-token=$CIRCLE_TOKEN | grep -o 'https://[^"]*' > artifacts.txt
       - run: <artifacts.txt xargs -P4 -I % wget -qO- %?circle-token=$CIRCLE_TOKEN | tar xvz
       - run: rm artifacts.txt
+      - run: ls -l
       - run:
           name: prepare dir
           command: ssh -o "StrictHostKeyChecking no" $PROD_USER@$PROD_HOSTNAME "rm -rf ~/workers/sms-sender && mkdir -p ~/workers/sms-sender"
       - run:
           name: rsync
-          command: cd ~/ && rsync ~/dist/ $PROD_USER@$PROD_HOSTNAME:~/workers/sms-sender/
+          command: rsync ./ $PROD_USER@$PROD_HOSTNAME:~/workers/sms-sender/
 
 workflows:
   version: 2
